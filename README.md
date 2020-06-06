@@ -1,0 +1,1 @@
+# H_resource_mine
