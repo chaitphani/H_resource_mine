@@ -1,0 +1,33 @@
+{% extends 'staff_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <h3 class="card-title">My Performance Reviews</h3>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Department Head</th>
+                        <th>Review Date</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>{{ list.co_ordinator }}</td>
+                        <td>{{ list.review_date|date:"d-m-Y--G:i" }}</td>
+                        <td>{{ list.description|truncatechars:120 }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

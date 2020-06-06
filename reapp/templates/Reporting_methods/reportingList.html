@@ -1,0 +1,23 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-10">
+    <form method="POST">
+        {% csrf_token %}
+        <a href="{% url 'reporting_add' %}" class="btn btn-success btn-sm">Add</a>
+        <button class="btn btn-danger btn-sm">Delete</button><br><br>
+        <table class="table table-hover">
+            <tr>
+                <th style="width: 65px"><input type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
+                <th>Name</th>
+            </tr>
+            {% for l in repo %}
+            <tr>
+                <td><input type="checkbox" name="repo_list" value="{{l.id}}"></td>
+                <td><a href="{% url 'reporting_edit' l.pk %}">{{l.Name}}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div>
+{% endblock %}

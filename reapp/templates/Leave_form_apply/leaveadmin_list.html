@@ -1,0 +1,124 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .card {
+     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+     padding: 5px;
+     border-radius: 5px !important;
+     margin-top: 20px;
+ }
+
+ .table td, .table th {
+padding: 6px !important;
+font-size: 14px;
+}
+.table{
+margin: 10px 0px;
+}
+tbody tr:nth-child(odd) {
+background: #eee;
+}
+
+th {
+background: #3d6889;
+font-weight: 700;
+color: #fff;
+}
+a:hover, a:focus {
+text-decoration: none;
+color: #222;
+}
+a{
+color: #222;
+}
+.btn-info:focus, .btn-info:hover{
+background-color: #028ee1;
+border: 1px solid #028ee1;
+}
+.btn-info, .btn-info.disabled {
+background: #398bf7;
+border: 1px solid #398bf7;
+box-shadow: 0 2px 2px 0 rgba(66, 165, 245, 0.14), 0 3px 1px -2px rgba(66, 165, 245, 0.2), 0 1px 5px 0 rgba(66, 165, 245, 0.12);
+transition: 0.2s ease-in;
+}
+.btn-inverse, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.focus, .btn-inverse:hover  {
+background-color: #aa4935;
+border: 1px solid #aa4935;
+color: #fff;
+}
+.btn{
+padding: 7px 12px;
+}
+.btn:focus{
+box-shadow: none !important;
+}
+
+</style>
+<div class="page-wrapper">
+  <div class="container">
+      <div class="card">
+
+          <div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+
+    <table class="table table-bordered table-responsive">
+        <tr>
+            <th>Sr. No</th>
+            <th>Employee</th>
+            <th>Designation</th>
+            <th>Department</th>
+            <th>leave_reason</th>
+            <th>leave_from</th>
+            <th>leave_to</th>
+            <th>Leave days</th>
+            <th>Address During Leave</th>
+            <th>Action</th>
+        </tr>
+        {% for li in list %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{li.employee.user_name}}</td>
+            <td>{{li.designation}}</td>
+            <td>{{li.department}}</td>
+            <td>{{li.leave_reason}}</td>
+            <td>{{li.leave_from|date:"d-m-Y"}}</td>
+            <td>{{li.leave_to|date:"d-m-Y"}}</td>
+            <td>{{li.monthly_leaves}}</td>
+            <td>{{li.address_during_leave_period}}</td> 
+            <td>
+                <select class="form-control permission_write" name="status" id="status_{{li.pk}}" onchange="statuss({{li.pk}})">
+                  <option value="Approved" {% if li.status == 'Approved' %} selected {% endif %} >Approved</option>
+                  <option value="Not Approved" {% if li.status == 'Not Approved' %} selected {% endif %} >Not Approved</option>
+                  <option value="Approved With Conditions" {% if li.status == 'Approved With Conditions' %} selected {% endif %} >Approved With Conditions</option>
+                </select>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </form>
+          </div>
+      </div>
+      </div>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    function statuss(pk) {
+      var apprs = $("#status_" + pk).val()
+      alert(apprs)
+      $.ajax({
+        type: "GET",
+        url: "{% url 'leaveadmin_list' %}",
+        data: { 'pk': pk, 'apprs': apprs },
+        success: function (data) {
+          alert('sucess')
+        },
+        error: function (response) {
+          console.log('error')
+        }
+      });
+    }
+  </script>
+</div>
+{% endblock %}

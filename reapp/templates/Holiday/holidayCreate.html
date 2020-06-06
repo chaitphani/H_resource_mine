@@ -1,0 +1,72 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <h3 class="card-title">Holiday Create</h3>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- {{form.as_p}} -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="id_Name">Name:</label> <input type="text" class="form-control" name="Name"
+                                maxlength="120" required id="id_Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_Date">Date:</label> <input class="form-control datepicker" name="Date"
+                                required id="id_Date">
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="id_Repeats_annually">Repeats annually:</label> <input type="checkbox"
+                                name="Repeats_annually" id="id_Repeats_annually">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_Full_Day_Half_Day">Full Day/Half Day:</label> <select
+                                name="Full_Day_Half_Day" class="form-control" id="id_Full_Day_Half_Day">
+                                <option value="Full day">FULL DAY</option>
+                                <option value="Half day">HALF DAY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-sm">Save</button>
+                    <button class="btn btn-default brn-sm" type="reset">Reset</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <table class="table table-hover">
+                <tr>
+                    </th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Repeats Annually</th>
+                    <th>Full Day / Half Day</th>
+                </tr>
+                {% for l in h1 %}
+                <tr>
+                    <td>{{l.name}}</td>
+                    <td>{{l.date|date:'d-m-Y'}}</td>
+                    <td>{% if l.repeats_annually %}
+                        <p>Yes</p>
+                        {% else %}
+                        <p>No</p>
+                        {% endif %}</td>
+                    <td>{{l.full_day_half_day}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+{% endblock %}

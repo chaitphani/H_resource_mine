@@ -1,0 +1,69 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Asset List</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'asset_list' %}">Asset List</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+          
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- {{form.as_p}} -->
+                    <div class="quali">
+                    <div class="row form-group">
+                        <div class=" col-md-4 mb-0">
+                            <label for="id_asset_name">Asset name:</label> <input type="text" name="asset_name"
+                                maxlength="120" id="id_asset_name" class="form-control" required>
+                        </div>
+                        <div class=" col-md-4 mb-0">
+                            <label for="id_asset_department">Asset department:</label> <select name="asset_department"
+                                id="id_asset_department" class="form-control" required>
+                                <option value="" selected>---------</option>
+                                {% for deps in department %}
+                                <option value="{{deps.id}}">{{deps}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-0">
+                            <label for="id_asset_description">Asset description:</label> <input type="text"
+                                name="asset_description" maxlength="120" id="id_asset_description" class="form-control">
+                        </div>
+                        <!-- <div class="form-group col-md-3 mb-0">
+                        <label for="id_status">Status:</label> <input type="checkbox" name="status" id="id_status"
+                            checked >
+                            </div> -->
+                    </div>
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

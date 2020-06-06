@@ -1,0 +1,67 @@
+{% extends 'staff_dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Leave List</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'attendance_create' %}">Leave List</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="quali">
+                        <div class="row form-group">
+                            <div class=" col-md-6">
+                                <label for="id_leave_from">Leave from:</label> <input type="date" name="leave_from"
+                                    id="id_leave_from" class="form-control">
+                            </div>
+                            <div class=" col-md-6">
+                                <label for="id_leave_to">Leave to:</label> <input type="date" name="leave_to"
+                                    id="id_leave_to" class="form-control">
+                            </div>
+                            <div class=" col-md-6">
+                                <label for="id_leave_reason">Leave reason:</label> <input type="text"
+                                    name="leave_reason" maxlength="120" id="id_leave_reason" class="form-control">
+                            </div>
+                            <div class=" col-md-6">
+                                <label for="id_address_during_leave_period">Address during leave period:</label> <input
+                                    type="text" name="address_during_leave_period" maxlength="300"
+                                    id="id_address_during_leave_period" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+{% endblock %}

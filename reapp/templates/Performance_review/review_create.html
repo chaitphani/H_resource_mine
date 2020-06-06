@@ -1,0 +1,86 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Performance List</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'review_list' %}">Performance List</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="quali">
+                        <div class="container">
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label for="id_employee">Employee:</label> <select onchange="emps()" name="employee"
+                                        class='form-control' id="id_employee" required>
+                                        <option value="" selected>---------</option>
+                                        {% for emp in employee %}
+                                        <option value="{{emp.id}}">{{emp}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                </div>
+                                <div class="col-md-6"> <label for="id_co_ordinator">Co ordinator:</label><input
+                                        type="text" id="id_co_ordinator" class='form-control co_ordinator'
+                                        name="coordinator" readonly><br>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_review_date">Review date:</label> <input
+                                        class='form-control datepicker' name="review_date" id="id_review_date"><br>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_description">Description:</label> <textarea name="description"
+                                        class='form-control' id="id_description" rows="1">
+                        </textarea><br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function emps() {
+        var emp = $('#id_employee').val()
+        // alert(emp)
+        $.ajax({
+            url: 'review_create',
+            data: {
+                'emp_id': emp
+            },
+            // dataType: 'json',
+            success: function (data) {
+                //   alert(data)
+                $('.co_ordinator').val(data)
+            }
+        })
+    }
+</script>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+{% endblock %}

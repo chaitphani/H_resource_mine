@@ -1,0 +1,92 @@
+{% extends 'staff_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .card {
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+    padding: 5px;
+    border-radius: 5px !important;
+    margin-top: 20px;
+  }
+</style>
+<div class="page-wrapper">
+  <div class="row">
+    <div class="col-md-12 page-title-div">
+      <h1 class="header">attendance Create</h1>
+      <ol class="breadcrumbs ">
+        <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li class="active"><a href="{% url 'attendance_create' %}">attendance Create</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="id_in_time">In time:</label> <input type="checkbox" onclick="myFunction()" name="in_time"
+                id="id_in_time">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="id_out_time">Out time:</label> <input type="checkbox" onclick="myFunc()" name="out_time"
+                id="id_out_time">
+            </div>
+            <div class="form-group col-md-4">
+              <input type="hidden" name="note" maxlength="120" id="id_note" class="form-control">
+            </div>
+          </div>
+          <input type="hidden" name="location" value="" id="loc" />
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+        <p id="demo"></p>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4b7_Jf4zkHHC1LoPQL4VC1XvvVVvMpKs
+  &libraries=places"></script>
+        <script>
+          // var x = document.getElementById("demo");
+
+          function getLocation() {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition);
+
+            } else {
+              alert("Geolocation is not supported by this browser.")
+            }
+          }
+          getLocation()
+          function showPosition(position) {
+            //   x.innerHTML = "Latitude: " + position.coords.latitude +
+            //   "<br>Longitude: " + position.coords.longitude;
+            //   console.log(position )
+            var geocoder = new google.maps.Geocoder();
+            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            if (geocoder) {
+              geocoder.geocode({ latLng: latLng }, (results, status) => {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  this.address = results[0].formatted_address;
+                  this.address = this.address.split(',');
+                  this.address = this.address[2] + ',' + this.address[3] + ',' + this.address[4] + ',' + this.address[5]
+                  console.log(this.address)
+                  $('#loc').val(this.address)
+
+                }
+              })
+            }
+          }
+        </script>
+
+        <script>
+          function myFunction() {
+            alert('Selected In-time');
+          }
+          function myFunc() {
+            alert('Selected Out-time');
+          }
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

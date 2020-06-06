@@ -1,0 +1,200 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+{{block.super}}
+<style>
+    body {
+        font-family: 'Nunito', sans-serif;
+    }
+
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .fa-trash:before {
+        content: "\f1f8";
+        color: red;
+    }
+
+    .table td,
+    .table th {
+        padding: 6px !important;
+        font-size: 14px;
+    }
+
+    .table {
+        margin: 10px 0px;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: #eee;
+    }
+
+    th {
+        background: #3d6889;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .btn-success {
+        margin-top: 5px;
+    }
+
+    .btn-info:focus,
+    .btn-info:hover {
+        background-color: #028ee1;
+        border: 1px solid #028ee1;
+    }
+
+    .btn-info {
+        background: #398bf7;
+        border: 1px solid #398bf7;
+        box-shadow: 0 2px 2px 0 rgba(66, 165, 245, 0.14), 0 3px 1px -2px rgba(66, 165, 245, 0.2), 0 1px 5px 0 rgba(66, 165, 245, 0.12);
+        transition: 0.2s ease-in;
+    }
+
+    a:hover,
+    a:focus {
+        text-decoration: none;
+        color: #222;
+    }
+
+    a {
+        color: #222;
+    }
+
+    .fa-trash:before {
+        content: "\f1f8";
+        color: #c73232;
+    }
+
+    .pagination {
+        margin-left: 44%;
+
+    }
+
+    ul.pagination span {
+        width: 34px;
+        height: 34px;
+        border-radius: 50px;
+        background: #275a73 !important;
+        color: #fff !important;
+        display: inline-block;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .page-link {
+        border: none !important;
+    }
+
+    .page-link:hover {
+        z-index: 2;
+        color: #0056b3;
+        text-decoration: none;
+        background-color: none !important;
+        border-color: none !important;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}" style="color: red">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mb-0">
+                            <label for="id_user_name">User Name :</label> <input type="text" name="user_name"
+                                class="form-control">
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                            <label for="id_employee_id">Employee Id :</label><input type="text" name='emp_id'
+                                class="form-control">
+                        </div>
+                        <div class="form-group col-md-4 mb-0">
+                            <label for="id_department">Department :</label><input type="text" name='department'
+                                class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Search">
+                </form>
+                <hr>
+                <a href="{% url 'create' %}" class="btn btn-info">Add</a>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Sr.no</th>
+                        <th>User Role</th>
+                        <th>User Name</th>
+                        <th>Department</th>
+                        <th>Employee Id</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for li in users %}
+                    <tr>
+                        <td>{% if li.user_role == 'staff' %}
+                            {{forloop.counter}}
+                            {% else %}
+                            {% endif %}
+                        </td>
+                        {% if li.user_role == 'staff' %}
+                        <td>Employee</td>
+                        {% else %}
+                        <td>Admin</td>
+                        {% endif %}
+                        {% if li.user_name %}
+                        <td>{% if li.user_role == 'staff' %}
+                            <a href="{% url 'employee_edit' li.pk %}">{{li.user_name}}</a>
+                            {% else %}
+                            <a>{{li.user_name}}</a>
+                            {% endif %}
+                        </td>
+                        {% else %}
+                        <td>Not Provided</td>
+                        {% endif %}
+                        <td>{{li.department}}</td>
+                        <td>{{li.emp_id}}</td>
+                        {% if li.status == True %}
+                        <td>Active</td>
+                        {% else %}
+                        <td>In Active</td>
+                        {% endif %}
+                        <td>{% if li.user_role == 'staff' %}
+                            <a href="{% url 'employee_edit' li.pk %}"><span class="fas fa-edit"></span></a>&nbsp;&nbsp;
+                            <a href="{% url 'employee_delete' li.pk %}"><span class="fa fa-trash"></span></a>
+                            {% else %}
+                            <a>---</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table><br><br>
+                {% if users.has_other_pages %}
+                <ul class="pagination">
+                    {% for i in users.paginator.page_range %}
+                    {% if users.number == i %}
+                    <li class="page-item"><a class="page-link" href="#"><span>{{ i }}&nbsp;&nbsp;<span
+                                    class="sr-only">(current)</span></span> </a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}"><span> {{ i }}</span></a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

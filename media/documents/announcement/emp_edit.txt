@@ -1,0 +1,134 @@
+<div class="tab">
+        <button class="tablinks btn btn-secondary" onclick="openCity(event, 'Personal Details')">Personal
+            Details</button>
+        <button class="tablinks btn btn-secondary" onclick="openCity(event, 'Contact Details')">Contact
+            Details</button>
+        <button class="tablinks btn btn-secondary" onclick="openCity(event, 'Emergency Contact Details')">Emergency
+            Contact
+            Details</button>
+        <button class="tablinks btn btn-secondary" onclick="openCity(event, 'Dependents Details')">Dependents
+            Details</button>
+        <button class="tablinks btn btn-secondary" onclick="openCity(event, 'Job Details')">Job Details</button>
+        <button class="tablinks btn btn-secondary" onclick="openCity(event, 'Pay Grade Details')">Pay Grade
+            Details</button>
+    </div><br><br>
+    <div class="tabcontent" id='Personal Details'>
+        <h3>Personal Details</h3><br>
+        <label for="id_first_name">First name:</label> <input type="text" name="first_name" class="form-control"
+            value="{{values.first_name}}" maxlength="120" id="id_first_name">
+
+        <label for="id_middle_name">Middle name:</label> <input value="{{values.middle_name}}" class="form-control"
+            type="text" name="middle_name" maxlength="120" id="id_middle_name">
+
+        <label for="id_last_name">Last name:</label> <input type="text" value="{{values.last_name}}"
+            class="form-control" name="last_name" maxlength="120" id="id_last_name">
+
+        <label for="id_emp_id">Emp id:</label> <input type="number" value="{{values.emp_id}}" class="form-control"
+            name="emp_id" id="id_emp_id">
+
+        <label for="id_dob">Date Of Birth</label> <input type="date" value="{{values.dob}}" class="form-control"
+            name="dob" id="id_dob">
+
+        <label for="id_gender">Gender:</label> <select name="gender" class="form-control" id="id_gender">
+            {% if values.gender == 'Male' %}
+            <option selected value="Male">Male</option>
+            <option value="Female">Female</option>
+            {% else %}
+            <option value="Male">Male</option>
+            <option selected value="Female">Female</option>
+            {% endif %}
+        </select>
+        <label for="id_marital_status">Marital status:</label> <select class="form-control" name="marital_status"
+            id="id_marital_status">
+            {% if values.marital_status == 'Married' %}
+            <option selected value="Married">Married</option>
+            <option value="Un Married">Un Married</option>
+            {% else %}
+            <option value="Male">Married</option>
+            <option selected value="Un Married">Un Married</option>
+            {% endif %}
+        </select>
+    </div>
+    <div class="tabcontent" id='Contact Details'>
+        <h3>Contact Details</h3><br>
+        <label for="id_address_streer1">Address streer1:</label> <input type="text" value="{{values.address_streer1}}"
+            name="address_streer1" maxlength="120" id="id_address_streer1">
+        <label for="id_address_streer2">Address streer2:</label> <input type="text" value="{{values.address_streer2}}"
+            name="address_streer2" maxlength="120" id="id_address_streer2">
+        <label for="id_city">City:</label> <input type="text" value="{{values.city}}" name="city" maxlength="120"
+            id="id_city"><br><br>
+        <label for="id_state">State:</label> <input type="text" name="state" value="{{values.state}}" maxlength="120"
+            id="id_state"><br><br>
+        <label for="id_zip_code">Zip code:</label> <input type="number" value="{{values.zip_code}}" name="zip_code"
+            id="id_zip_code">
+        <label for="id_country">Country:</label> <input type="text" name="country" value="{{values.country}}"
+            maxlength="120" id="id_country">
+        <label for="id_mobile">Mobile:</label> <input type="number" name="mobile" value="{{values.mobile}}"
+            id="id_mobile">
+        <label for="id_email">Email:</label> <input type="email" placeholder="Enter Email" name="email"
+            value="{{values.email}}" maxlength="120" id="id_email">
+    </div>
+    <div class="tabcontent" id='Emergency Contact Details'>
+        <h3>Emergency Contact Details</h3><br>
+        <label for="id_relation_name">Relation name:</label> <input type="text" value="{{values.relation_name}}"
+            name="relation_name" maxlength="120" id="id_relation_name">
+        <label for="id_relation_type">Relation type:</label> <input type="text" value="{{values.relation_type}}"
+            name="relation_type" maxlength="120" id="id_relation_type">
+        <label for="id_relation_mobile">Relation mobile:</label> <input type="number" value="{{values.relation_mobile}}"
+            name="relation_mobile" id="id_relation_mobile"><br><br>
+        <label for="id_relation_email">Relation email:</label> <input type="email" value="{{values.relation_email}}"
+            name="relation_email" maxlength="120" id="id_relation_email">
+    </div>
+    <div class="tabcontent" id='Dependents Details'>
+        <h3>Dependents Details</h3><br>
+        <label for="id_dependant_name">Dependant name:</label> <input type="text" value="{{values.dependant_name}}"
+            name="dependant_name" maxlength="120" id="id_dependant_name">
+        <label for="id_dependent_type">Dependent type:</label> <input type="text" value="{{values.dependent_type}}"
+            name="dependent_type" maxlength="120" id="id_dependent_type">
+        <label for="id_dependent_dob">Dependent Dob:</label> <input type="date" value="{{values.dependent_dob}}"
+            name="dependent_dob" maxlength="120" id="id_dependent_dob">
+    </div>
+    <div class="tabcontent" id='Job Details'>
+        <h3>Job Details</h3><br>
+        <label for="id_job_title">Job title:</label> <input type="text" name="job_title" value="{{values.job_title}}"
+            maxlength="120" id="id_job_title">
+        <label for="id_employement_status">Employement status:</label> <input type="text"
+            value="{{values.employement_status}}" name="employement_status" maxlength="120" id="id_employement_status">
+        <label for="id_job_category">Job category:</label> <input type="text" name="job_category"
+            value="{{values.job_category}}" maxlength="120" id="id_job_category">
+        <label for="id_joined_date">Joined Date:</label> <input type="date" name="joined_date"
+            value="{{values.joined_date}}" maxlength="120" id="id_joined_date"><br><br>
+        <label for="id_sub_unit">Sub unit:</label> <input type="text" name="sub_unit" value="{{values.sub_unit}}"
+            maxlength="120" id="id_sub_unit">
+        <label for="id_location">Location:</label> <input type="text" name="location" value="{{values.location}}"
+            maxlength="120" id="id_location">
+    </div>
+    <div class="tabcontent" id="Pay Grade Details">
+        <h3>Pay Grade Details</h3><br>
+        <label for="id_pay_grade">Pay grade:</label> <input type="text" value="{{values.pay_grade}}" name="pay_grade"
+            maxlength="120" id="id_pay_grade">
+        <label for="id_salary_component">Salary component:</label> <input type="number"
+            value="{{values.salary_component}}" name="salary_component" id="id_salary_component">
+        <label for="id_pay_frequency">Pay frequency:</label> <input type="text" value="{{values.pay_frequency}}"
+            name="pay_frequency" maxlength="120" id="id_pay_frequency"><br><br>
+        <label for="id_currency">Currency:</label> <input type="text" name="currency" value="{{values.currency}}"
+            maxlength="120" id="id_currency">
+        <label for="id_Amount">Amount:</label> <input type="number" value="{{values.Amount}}" name="Amount"
+            id="id_Amount"><br>
+        <input type="submit" class="btn btn-primary" value="Save">
+    </div>
+    <script>
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script> -->

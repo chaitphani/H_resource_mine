@@ -1,0 +1,35 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-10">
+    <form method="POST">
+        {% csrf_token %}
+        Location Name <input type="text" name="name">
+        City <input type="text" name='city'>
+        Country <input type="text" name='country'>
+        <button class="btn btn-success btn-sm">Search</button>
+        <button type="reset" class="btn btn-default btn-sm">Reset</button>
+        <hr>
+        <button class="btn btn-success btn-sm"><a href="{% url 'location_add' %}">Add</a></button>
+        <button class="btn btn-danger btn-sm">Delete</button>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Phone</th>
+                <th>Number of Employees</th>
+            </tr>
+            {% for ta in tata %}
+            <tr>
+                <td><a href="{% url 'location_edit' ta.pk %}">{{ta.name}}</a></td>
+                <td>{{ta.city}}</td>
+                <td>{{ta.country}}</td>
+                <td>{{ta.phone}}</td>
+                <td>{{ta.city}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div>
+{% endblock %}

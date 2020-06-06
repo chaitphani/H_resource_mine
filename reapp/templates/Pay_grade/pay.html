@@ -1,0 +1,41 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+
+.card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+</style>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- {{form.as_p}} -->
+            <div class="row">
+            <div class="col-md-6">
+                <label for="id_name">Name:</label> <input type="text" class="form-control" name="name" maxlength="120"
+                    id="id_name">
+            </div>
+            <div class="col-md-6">
+                <label for="id_currency">Currency:</label> <select name="currency" class="form-control" id="id_currency"
+                    multiple>
+                    {% for cur in curren %}
+                    <option value="{{cur.id}}">{{cur}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            </div>
+            <button class="btn btn-info" type='reset'>Reset</button>&nbsp;&nbsp;
+        </form>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

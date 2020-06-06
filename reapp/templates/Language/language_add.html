@@ -1,0 +1,54 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body{
+   font-family: 'Nunito', sans-serif;
+}
+.card {
+       box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+       padding: 5px;
+       border-radius: 5px !important;
+       margin-top: 20px;
+   }
+
+   .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Language List</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'language_list' %}">Language List</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+
+            <div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        <!-- {{kal.as_p}} -->
+        <div class="quali">
+            <div class="row form-group">
+            
+        <div class="col-md-12">
+            <label for="id_name">Name:</label> <br><input type="text" class="form-control" name="name" maxlength="120"
+                id="id_name" required>
+        </div>
+            
+    </div>
+</div>
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

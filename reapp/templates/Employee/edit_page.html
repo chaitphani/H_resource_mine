@@ -1,0 +1,853 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> -->
+<style>
+    a {
+        color: black;
+    }
+
+    .btn {
+        float: right;
+    }
+
+    label {
+        font-family: -webkit-body !important;
+        color: black;
+    }
+
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+        background-color: #fff;
+    }
+
+    /* style */
+    .nav-item .nav-link,
+    .nav-tabs .nav-link {
+        -webkit-transition: all 300ms ease 0s;
+        -moz-transition: all 300ms ease 0s;
+        -o-transition: all 300ms ease 0s;
+        -ms-transition: all 300ms ease 0s;
+        transition: all 300ms ease 0s;
+    }
+
+    .card a {
+        -webkit-transition: all 150ms ease 0s;
+        -moz-transition: all 150ms ease 0s;
+        -o-transition: all 150ms ease 0s;
+        -ms-transition: all 150ms ease 0s;
+        transition: all 150ms ease 0s;
+    }
+
+    .nav-tabs {
+        border: 0;
+        padding: 15px 0.7rem;
+    }
+
+    .nav-tabs:not(.nav-tabs-neutral)>.nav-item>.nav-link.active {
+        box-shadow: 0px 5px 35px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    .card .nav-tabs {
+        border-top-right-radius: 0.1875rem;
+        border-top-left-radius: 0.1875rem;
+    }
+
+    .nav-tabs>.nav-item>.nav-link {
+        color: #888888;
+        margin: 0;
+        margin-right: 5px;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 30px;
+        font-size: 14px;
+        padding: 3px 7px;
+        line-height: 1.5;
+    }
+
+    .nav-tabs>.nav-item>.nav-link:hover {
+        background-color: transparent;
+        border-color: #e9ecef #e9ecef #dee2e6;
+    }
+
+    .nav-tabs>.nav-item>.nav-link.active {
+        background-color: #444;
+        border-radius: 30px;
+        color: #FFFFFF;
+    }
+
+    .nav-tabs>.nav-item>.nav-link i.now-ui-icons {
+        font-size: 14px;
+        position: relative;
+        top: 1px;
+        margin-right: 3px;
+    }
+
+    .nav-tabs.nav-tabs-neutral>.nav-item>.nav-link {
+        color: #FFFFFF;
+    }
+
+    .nav-tabs.nav-tabs-neutral>.nav-item>.nav-link.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #FFFFFF;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 0.1875rem;
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        margin-bottom: 30px;
+        box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .card .card-header {
+        background-color: transparent;
+        border-bottom: 0;
+        background-color: transparent;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    .card[data-background-color="orange"] {
+        background-color: #f96332;
+    }
+
+    .card[data-background-color="red"] {
+        background-color: #FF3636;
+    }
+
+    .card[data-background-color="yellow"] {
+        background-color: #FFB236;
+    }
+
+    .card[data-background-color="blue"] {
+        background-color: #2CA8FF;
+    }
+
+    .card[data-background-color="green"] {
+        background-color: #15b60d;
+    }
+
+    [data-background-color="orange"] {
+        background: linear-gradient(to right, rgb(64, 78, 103), rgb(64, 78, 103));
+    }
+
+
+    [data-background-color="black"] {
+        background-color: #2c2c2c;
+    }
+
+    [data-background-color]:not([data-background-color="gray"]) {
+        color: #FFFFFF;
+    }
+
+    [data-background-color]:not([data-background-color="gray"]) p {
+        color: #FFFFFF;
+    }
+
+    [data-background-color]:not([data-background-color="gray"]) a:not(.btn):not(.dropdown-item) {
+        color: #FFFFFF;
+    }
+
+    [data-background-color]:not([data-background-color="gray"]) .nav-tabs>.nav-item>.nav-link i.now-ui-icons {
+        color: #FFFFFF;
+    }
+
+
+    select.form-control[multiple],
+    select.form-control[size] {
+        /* height: auto; */
+        height: 39px;
+    }
+
+    .card .card-header {
+        /* background-color: transparent; */
+        border-bottom: 0;
+        /* background-color: transparent; */
+        border-radius: 4px;
+        padding: 0px;
+        background: #404e67;
+        color: #fff;
+        padding-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+
+    label {
+        text-transform: capitalize;
+    }
+
+    input[type='checkbox'] {
+        margin-top: 27%;
+    }
+
+    /* .select2-selection__arrow,
+    .select2-selection--single {
+        visibility: hidden;
+    } */
+</style>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- {{form.as_p}}  -->
+                <div class="card-header">
+                    <ul class="nav nav-tabs nav-tabs-neutral justify-content-center" role="tablist"
+                        data-background-color="orange">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle='tab' href="#Personal_Details">Personal Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle='tab' href="#Contact_Details">Contact Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle='tab' href="#Emergency_Contacts">Emergency Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle='tab' href="#Dependent_Details">Depenedent Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle='tab' href="#Job_Details">Job Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle='tab' href="#Salary_Details">Salary Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle='tab' href="#Qualification_Details">Qualification
+                                Details</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content ">
+                        <div id='Personal_Details' class="container tab-pane active">
+                            <div class="quali">
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_first_name">First name:</label> <input type="text"
+                                            name="first_name" class='form-control'
+                                            value="{{values.first_name|default:''}}" maxlength="120" id="id_first_name">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_middle_name">Middle name:</label> <input type="text"
+                                            name="middle_name" class='form-control'
+                                            value="{{values.middle_name|default:''}}" maxlength="120"
+                                            id="id_middle_name">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_last_name">Last name:</label> <input type="text" name="last_name"
+                                            class='form-control' value="{{values.last_name|default:''}}" maxlength="120"
+                                            id="id_last_name">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_emp_id">Emp id:</label> <input type="number" name="emp_id"
+                                            class='form-control' value="{{values.emp_id|default:''}}" id="id_emp_id">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_gender">Gender:</label> <select name="gender"
+                                            class='form-control' id="id_gender">
+                                            <option value="Male" {% if values.gender == 'Male' %} selected {% endif %}>
+                                                Male
+                                            </option>
+                                            <option value="Fe Male" {% if values.gender == 'Fe Male' %} selected
+                                                {% endif %}>FeMale
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_marital_status">Marital status:</label> <select
+                                            name="marital_status" class='form-control' id="id_marital_status">
+                                            <option value="Married" {% if values.marital_status == 'Married' %} selected
+                                                {% endif %}>
+                                                Married
+                                            </option>
+                                            <option value="Un Married" {% if values.marital_status == 'Un Married' %}
+                                                selected {% endif %}>Un Married</option>
+                                        </select><br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="datepicker">Dob:</label> <input name="dob" class='form-control'
+                                            value="{{values.dob|date:'Y-m-d'}}" id="datepicker">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="id_status">Status:</label> <input type="checkbox" name="status"
+                                            checked id="id_status">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id='Contact_Details' role="tabpanel">
+                            <div class="quali">
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_address_streer1">Address line 1:</label> <input type="text"
+                                            class='form-control' name="address_streer1" autocomplete="off"
+                                            value="{{values.address_streer1|default:''}}" maxlength="120"
+                                            id="id_address_streer1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_address_streer2">Address line 2:</label> <input type="text"
+                                            class='form-control' name="address_streer2"
+                                            value="{{values.address_streer2|default:''}}" maxlength="120"
+                                            id="id_address_streer2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_country">Country:</label> <select name="country"
+                                            class="form-control" id="id_country">
+                                            {% for count in country %}
+                                            {% if values.country.name == count.name %}
+                                            <option value="{{count.id}}" selected>
+                                                {{count.name}}
+                                            </option>
+                                            {% else %}
+                                            <option value="{{count.id}}">
+                                                {{count.name}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_state">State:</label> <select name="state" class="form-control"
+                                            id="id_state">
+                                            <!-- {% for state in states %}
+                                            {% if values.state.name == state.name %}
+                                            <option value="{{state.id}}" selected>
+                                                {{state.name}}
+                                            </option>
+                                            {% else %}
+                                            <option value="{{state.id}}">
+                                                {{state.name}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %} -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_city">City:</label> <select name="city" class="form-control"
+                                            id="id_city">
+                                            <!-- {% for city in cities %}
+                                            {% if values.city.name == city.name %}
+                                            <option value="{{city.id}}" selected>
+                                                {{city.name}}
+                                            </option>
+                                            {% else %}
+                                            <option value="{{city.id}}">
+                                                {{city.name}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %} -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_zip_code">Zip code:</label> <input type="number" name="zip_code"
+                                            class='form-control' value="{{values.zip_code|default:''}}"
+                                            id="id_zip_code">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_mobile">Contact no:</label> <input type="number" name="mobile"
+                                            class='form-control' value="{{values.mobile|default:''}}" id="id_mobile">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_email">Email:</label> <input type="email" name="email"
+                                            class='form-control' value="{{values.email|default:''}}" maxlength="120"
+                                            id="id_email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id='Emergency_Contacts' role="tabpanel">
+                            <div class="quali">
+                                <div class="row form-group">
+                                    <div class="col-md-3">
+                                        <label for="id_relation_name">Relation name:</label>
+                                        <input type="text" name="relation_name"
+                                            value="{{values.relation_name|default:''}}" class='form-control'
+                                            maxlength="120" id="id_relation_name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_relation_type">Relation
+                                            type:</label> <input type="text" name="relation_type" class='form-control'
+                                            value="{{values.relation_type|default:''}}" maxlength="120"
+                                            id="id_relation_type">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="id_relation_mobile">Relation
+                                            mobile:</label> <input type="number" name="relation_mobile"
+                                            class='form-control' value="{{values.relation_mobile|default:''}}"
+                                            id="id_relation_mobile">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_relation_email">Relation
+                                            email:</label> <input type="email" name="relation_email"
+                                            class='form-control' value="{{values.relation_email|default:''}}"
+                                            maxlength="120" id="id_relation_email">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id='Dependent_Details' role="tabpanel">
+                            <div class="quali">
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_dependant_name">Dependant
+                                            name:</label> <input type="text" name="dependant_name" class='form-control'
+                                            value="{{values.dependant_name|default:''}}" maxlength="120"
+                                            id="id_dependant_name">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_dependent_relation">Dependent
+                                            relation:</label> <input type="text" name="dependent_relation"
+                                            class='form-control' value="{{values.dependent_relation|default:''}}"
+                                            maxlength="120" id="id_dependent_relation">
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <label for="id_dependent_dob">Dependent
+                                            dob:</label> <input value="{{values.dependent_dob|date:'Y-m-d'}}"
+                                            class='form-control datepicker' name="dependent_dob" id="id_dependent_dob">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id='Job_Details' role="tabpanel">
+                            <div class="quali">
+                                <div class="row form-group">
+                                    <div class="col-md-3">
+                                        <label for="id_job_title">Job
+                                            title:</label>
+                                        <select name="job_title" class="form-control" id="id_job_title">
+                                            {% for depart in jobtit %}
+                                            {% if values.job_title.job_title == depart.job_title %}
+                                            <option value="{{depart.id}}" selected>
+                                                {{depart}}
+                                            </option>
+                                            {% else %}
+                                            <option value="{{depart.id}}">
+                                                {{depart}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_job_category">Job
+                                            category:</label>
+                                        <select name="job_category" class="form-control" id="id_job_category">
+                                            {% for job in jobcat %}
+                                            {% if values.job_category.name == job.name %}
+                                            <option value="{{job.id}}" selected>
+                                                {{job}}
+                                            </option>
+                                            {% else %}
+                                            <option value="{{job.id}}">
+                                                {{job}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_department">Department:</label>
+                                        <select name="department" class='form-control' id="id_department">
+                                            {% for depart in departm %}
+                                            {% if values.department.dep_name == depart.dep_name %}
+                                            <option value="{{depart.id}}" selected>
+                                                {{depart}}
+                                            </option>
+                                            {% else %}
+                                            <option value="{{depart.id}}">
+                                                {{depart}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_supervisor_name">Supervisor
+                                            name:</label>
+                                        <input type="text" name="supervisor_name"
+                                            value="{{values.supervisor_name|default:''}}" class='form-control'
+                                            maxlength="120" id="id_supervisor_name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_subordinate_name">Subordinate
+                                            name:</label>
+                                        <input type="text" name="subordinate_name"
+                                            value="{{values.subordinate_name|default:''}}" class='form-control'
+                                            maxlength="120" id="id_subordinate_name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_joined_date">Joined
+                                            date:</label>
+                                        <input value="{{values.joined_date|date:'Y-m-d'}}" name="joined_date"
+                                            class="form-control datepicker" id="id_joined_date">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="id_releave_date">Releave date:</label> <input type="text"
+                                            class="form-control datepicker" name="releave_date" id="id_releave_date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id='Salary_Details' role="tabpanel">
+                            <div class="quali">
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_pay_frequency">Pay
+                                            frequency:</label>
+                                        <select name="pay_frequency" class='form-control' id="id_pay_frequency">
+                                            <option value="BiWeekly" {% if values.pay_frequency == 'BiWeekly' %}
+                                                selected {% endif %}>
+                                                BiWeekly
+                                            </option>
+                                            <option value="Hourly" {% if values.pay_frequency == 'Hourly' %} selected
+                                                {% endif %}>
+                                                Hourly
+                                            </option>
+                                            <option value="Monthly" {% if values.pay_frequency == 'Monthly' %} selected
+                                                {% endif %}>
+                                                Monthly
+                                            </option>
+                                            <option value="Semi Monthly" {% if values.pay_frequency == 'Semi Monthly' %}
+                                                selected {% endif %}>
+                                                Semi
+                                                Monthly
+                                            </option>
+                                            <option value="Weekely" {% if values.pay_frequency == 'Weekely' %} selected
+                                                {% endif %}>
+                                                Weekely
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_amount">Amount:</label>
+                                        <input type="number" class='form-control' name="amount"
+                                            value="{{values.amount|default:''}}" id="id_amount">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_account_type">Account
+                                            type:</label>
+                                        <select name="account_type" class='form-control' id="id_account_type">
+                                            <option value="Savings" {% if values.account_type == 'Savings' %} selected
+                                                {% endif %}>
+                                                Savings
+                                            </option>
+                                            <option value="Checking" {% if values.account_type == 'Checking' %} selected
+                                                {% endif %}>
+                                                Checking
+                                            </option>
+                                            <option value="Other" {% if values.account_type == 'Other' %} selected
+                                                {% endif %}>
+                                                Other
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        <label for="id_account_number">Account
+                                            number:</label>
+                                        <input type="number" name="account_number"
+                                            value="{{values.account_number|default:''}}" class='form-control'
+                                            id="id_account_number">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_bank_name">Bank name:</label> <input type="text"
+                                            class="form-control" name="bank_name" maxlength="120" id="id_bank_name">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_ifsc_code">Ifsc code:</label> <input type="number"
+                                            class="form-control" name="ifsc_code" id="id_ifsc_code">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id='Qualification_Details' role="tabpanel">
+                            <div class="quali ">
+                                <div class="card-header work">Work Experience</div>
+                                <div class="row form-group work-group ">
+                                    <div class="col-md-6">
+                                        <label for="id_company">Previous Company:</label>
+                                        <input type="text" name="company" value="{{values.company|default:''}}"
+                                            maxlength="120" class='form-control' id="id_company">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="id_jobtitle">Job title:</label>
+                                        <input type="text" name="jobtitle" value="{{values.jobtitle|default:''}}"
+                                            maxlength="120" class='form-control' id="id_jobtitle"><br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_from_date">From
+                                            date:</label>
+                                        <input value="{{values.from_date|date:'Y-m-d'}}" class='form-control datepicker'
+                                            name="from_date" id="id_from_date">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="id_to_date">To
+                                            date:</label>
+                                        <input name="to_date" class='form-control datepicker'
+                                            value="{{values.to_date|date:'Y-m-d'}}" id="id_to_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id='restr'>
+                                <div class="quali">
+                                    <div class="card-header level">Level</div>
+                                    <div class="row form-group level-group">
+                                        <div class="col-md-4">
+                                            <label for="id_level">Qualification:</label>
+                                            <select name="level" class='form-control' id="id_level">
+                                                {% for edu in educa %}
+                                                {% if values.level.Level == edu.Level %}
+                                                <option value="{{edu.id}}" selected>
+                                                    {{edu}}
+                                                </option>
+                                                {% else %}
+                                                <option value="{{edu.id}}">
+                                                    {{edu}}
+                                                </option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="id_institue">University:</label>
+                                            <input type="text" name="institue" value="{{values.institue|default:''}}"
+                                                maxlength="120" class='form-control' id="id_institue">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="id_specialization">Specialization:</label>
+                                            <input type="text" name="specialization"
+                                                value="{{values.specialization|default:''}}" class='form-control'
+                                                maxlength="120" id="id_specialization"><br>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="id_year">Year completed:</label>
+                                            <input type="text" name="year" class='form-control'
+                                                value="{{values.year|default:''}}" maxlength="120" id="id_year">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="id_GPA_Score">GPA
+                                                Score:</label>
+                                            <input type="text" name="GPA_Score" value="{{values.GPA_Score|default:''}}"
+                                                maxlength="120" class='form-control' id="id_GPA_Score">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="id_start_date">Start
+                                                date:</label>
+                                            <input value="{{values.start_date|date:'Y-m-d'}}" name="start_date"
+                                                class='form-control datepicker' id="id_start_date">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="id_end_date">End
+                                                date:</label>
+                                            <input value="{{values.end_date|date:'Y-m-d'}}"
+                                                class='form-control datepicker' name="end_date" id="id_end_date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quali ">
+                                    <div class="card-header skill">Skills</div>
+                                    <div class="row form-group skill_group">
+                                        <div class="col-md-4">
+                                            <label for="id_skill">Skill:</label>
+                                            <select name="skill" id="id_skill" class='form-control selec2' multiple>
+                                                {% for skil in skill %}
+                                                {% if values.skill.name == skil.name %}
+                                                <option value="{{skil.id}}" selected>
+                                                    {{skil}}
+                                                </option>
+                                                {% else %}
+                                                <option value="{{skil.id}}">
+                                                    {{skil}}
+                                                </option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="id_years_of_experience">Years
+                                                of
+                                                experience:</label>
+                                            <input type="number" name="years_of_experience" class='form-control'
+                                                value="{{values.years_of_experience|default:''}}"
+                                                id="id_years_of_experience">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="id_language">Language:</label>
+                                            <select name="language" id="id_language" class='form-control selec2'
+                                                multiple required>
+                                                {% for lan in language %}
+                                                {% if values.language.name == lan.name %}
+                                                <option value="{{lan.id}}" selected>{{lan}}</option>
+                                                {% else %}
+                                                <option value="{{lan.id}}">{{lan}}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select><br>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="id_fluency">Fluency:</label>
+                                            <select name="fluency" class='form-control' id="id_fluency">
+                                                <option value="Writing" {% if values.fluency == 'Writing' %} selected
+                                                    {% endif %}>
+                                                    Writing
+                                                </option>
+                                                <option value="Speaking" {% if values.fluency == 'Speaking' %} selected
+                                                    {% endif %}>
+                                                    Speaking
+                                                </option>
+                                                <option value="Reading" {% if values.fluency == 'Reading' %} selected
+                                                    {% endif %}>
+                                                    Reading
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="id_competency">Competency:</label>
+                                            <select name="competency" class='form-control' id="id_competency">
+                                                <option value="Poor" {% if values.competency == 'Poor' %} selected
+                                                    {% endif %}>
+                                                    Poor
+                                                </option>
+                                                <option value="Basic" {% if values.competency == 'Basic' %} selected
+                                                    {% endif %}>
+                                                    Basic
+                                                </option>
+                                                <option value="Good" {% if values.competency == 'Good' %} selected
+                                                    {% endif %}>
+                                                    Good
+                                                </option>
+                                                <option value="Mother Tongue"
+                                                    {% if values.competency == 'Mother Tongue' %} selected {% endif %}>
+                                                    Mother
+                                                    Tongue
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quali">
+                                    <div class="card-header lice">License
+                                    </div>
+                                    <div class="row form-group lice_group">
+                                        <div class="col-md-3">
+                                            <label for="id_license_type">License
+                                                type:</label>
+                                            <select name="license_type" class='form-control' id="id_license_type">
+                                                {% for licen in lisense %}
+                                                {% if values.license_type.name == licen.name %}
+                                                <option value="{{licen.id}}" selected>
+                                                    {{licen}}
+                                                </option>
+                                                {% else %}
+                                                <option value="{{licen.id}}">
+                                                    {{licen}}
+                                                </option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="id_license_number">License
+                                                number:</label>
+                                            <input type="number" name="license_number"
+                                                value="{{values.license_number|default:''}}" class='form-control'
+                                                id="id_license_number">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="id_issued_date">Issued
+                                                date:</label>
+                                            <input value="{{values.issued_date|date:'Y-m-d'}}" name="issued_date"
+                                                class='form-control datepicker' id="id_issued_date">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="id_expiry_date">Expiry
+                                                date:</label>
+                                            <input value="{{values.expiry_date|date:'Y-m-d'}}" name="expiry_date"
+                                                class='form-control datepicker' id="id_expiry_date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="btn btn-primary" type="submit" value="Save">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".work").click(function () {
+                $(".work-group").toggle();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".skill").click(function () {
+                $(".skill_group").toggle();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".level").click(function () {
+                $(".level-group").toggle();
+            });
+        }); 
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".lice").click(function () {
+                $(".lice_group").toggle();
+            });
+        });
+    </script>
+    <!-- <script>
+        $(document).ready(function () {
+            $('.selec2').select2();
+        });
+    </script> -->
+    {% endblock %}

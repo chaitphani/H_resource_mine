@@ -1,0 +1,165 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Nunito', sans-serif !important;
+    }
+
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    /* .card-title {
+        margin-bottom: .75rem;
+        border-bottom: 1px solid #d2d0d0;
+        color: #000;
+        font-size: 18px;
+    }
+     */
+     .card .card-header {
+        /* background-color: transparent; */
+        border-bottom: 0;
+        /* background-color: transparent; */
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        padding: 0px;
+        background: #0c3d58;
+        color: #fff;
+        padding-left: 10px;
+    }
+    button.btn.btn-success {
+        margin: 10px 0px;
+    }
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+<div class="page-wrapper">
+
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">General Info</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'genInfo_add_or_create' %}">General Info</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" id="myForm">
+                    {% csrf_token %}
+                    <!-- {{form.as_p}} -->
+
+                    <div class="col-sm-12">
+                        <div class="quali">
+                        <div class="card-header"> General Details
+                        </div>
+                       
+                        <div class="row form-group">
+
+                            <div class="col-sm-6 ">
+                                <label for="id_organisation_Name">Organisation Name:</label>
+                                <input type="text" name="organisation_Name" value="medeaz" maxlength="120" id="myText"
+                                    class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <label for="id_tax_id">Tax id:</label> <input type="text" name="tax_id" value="78"
+                                    maxlength="120" id="myText" class="form-control" disabled>
+                            </div>
+                       
+                        <div class=" col-md-12">
+                            <label for="id_number_of_employees">Number of employees:</label> <input type="number"
+                                name="number_of_employees" value="41" id="myText" class="form-control" disabled>
+                        </div>
+                   
+                      
+                            <div class="col-sm-4 ">
+                                <label for="id_registration_number">Registration number:</label> <input type="number"
+                                    name="registration_number" value="676465" id="myText" class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <label for="id_phone">Phone:</label> <input type="number" name="phone"
+                                    value="7894562130" id="myText" class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <label for="id_email">Email:</label> <input type="email" name="email"
+                                    class="form-control" disabled value="sjdfhj@gmail.com" maxlength="120" id="myText">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="quali">
+                        <div class="card-header"> Address
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-6 ">
+                                <label for="id_address_street_1">Address street 1:</label> <input type="text"
+                                    name="address_street_1" value="301" maxlength="120" id="myText" class="form-control"
+                                    disabled>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <label for="id_address_street_2">Address street 2:</label> <input type="text"
+                                    name="address_street_2" value="hanuman villas" maxlength="120" id="myText"
+                                    class="form-control" disabled>
+                            </div>
+                        
+                            <div class="col-sm-6 ">
+                                <label for="id_city">City:</label> <input type="text" name="city" value="hydearabad"
+                                    maxlength="120" id="myText" class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <label for="id_state_Province">State Province:</label> <input type="text"
+                                    name="state_Province" value="telangana" maxlength="120" id="myText"
+                                    class="form-control" disabled>
+                            </div>
+           
+                            <div class="col-sm-6 ">
+                                <label for="id_zip_postal_code">Zip postal code:</label> <input type="number"
+                                    class="form-control" disabled name="zip_postal_code" value="500072" id="myText">
+                            </div>
+                            <div class="col-sm-6 ">
+                                <label for="id_country">Country:</label> <input type="text" name="country" value="India"
+                                    maxlength="120" id="myText" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class=" row form-group">
+                            <div class="col-md-12">
+                            <label for="id_number_of_employees">Number of employees:</label> <input type="number"
+                                name="number_of_employees" value="41" id="myText" class="form-control" disabled>
+                        </div>
+                    </div>
+                   
+                        <!-- <div class="col-md-12">
+                            <label for="id_note">Note:</label> <input type="text" name="note" value="dsfyguhj"
+                                maxlength="120" id="myText1" class="form-control" disabled>
+                        </div> -->
+                    </div>
+</div>
+
+                    <input type="submit" class="btn btn-primary" value="save" id="formbut" style="display: none;">
+                    <!-- <button id="formbut" style="display: none;">Disable Text field</button> -->
+                </form>
+                <!-- <button id="notformbut" onclick="myFunction()">Disable Text field</button> -->
+                <input type="submit" class="btn btn-primary" value="Edit" id="notformbut" onclick="myFunction()">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction() {
+        // alert()
+        $("#myForm :input").prop("disabled", false);
+        $('#formbut').show()
+        $('#notformbut').hide()
+    }
+</script>
+
+{% endblock %}

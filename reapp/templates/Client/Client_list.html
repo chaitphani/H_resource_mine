@@ -1,0 +1,40 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <h3 class="card-title">Client List</h3>
+            <hr>
+            <div class="card-body">
+                <a href="{% url 'Client_create' %}" type='button' title="Add Client Here"
+                    class='btn btn-primary btn-sm'>Add
+                    Client</a>
+                <a href="{% url 'project_create' %}" type='button' title="Add Project Here"
+                    class='btn btn-success btn-sm'>Add
+                    Project</a><br><br>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    {% for res in ac %}
+                    <tr>
+                        <td><a href="{% url 'Client_update' res.pk %}">{{res.name}}</a></td>
+                        <td>{{res.description}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

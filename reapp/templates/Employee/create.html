@@ -1,0 +1,159 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .hidee {
+        padding-bottom: 20px;
+    }
+
+    .names_id {
+        width: 100%;
+    }
+
+    #full_name {
+        margin-right: 55px;
+        margin-top: 35px;
+    }
+
+    #id_status {
+        margin-left: 44px;
+        margin-top: 44px;
+    }
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+    .photograph {
+        padding: 4px !important;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("#have_to").click(function () {
+            if ($(this).is(":checked")) {
+
+                $("#extra_fields").show();
+            } else {
+                $("#extra_fields").hide();
+            }
+        });
+    });
+</script>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for msg in messages %}
+    <li class="{{ msg.tags }}">{{ msg }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Employee List</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'create' %}">Employee List</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+
+                   
+                    {% csrf_token %}
+                    <!-- {{form.as_p}} -->
+                    <div class="quali">
+                    <div class="row form-group">
+
+                        <!-- <strong>
+                        <p id='full_name'>Full Name</p>
+                    </strong> -->
+                        <div class=" col-md-4 mb-0">
+                            <label for="id_first_name">First name:</label> <input type="text" name="first_name"
+                                maxlength="120" class="form-control" id="id_first_name" required>
+                        </div>
+                        <div class=" col-md-4 mb-0">
+                            <label for="id_middle_name">Middle name:</label> <input type="text" name="middle_name"
+                                class="form-control" maxlength="120" id="id_middle_name">
+                        </div>
+                        <div class=" col-md-4 mb-0">
+                            <label for="id_last_name">Last name:</label> <input type="text" name="last_name"
+                                maxlength="120" class="form-control" id="id_last_name">
+                        </div>
+                   
+                        <div class="col-md-4 role mb-0">
+                            <label for="id_user_role">User role:</label> <select class="form-control" name="user_role"
+                                id="id_user_role" required>
+                                <option value="">---------</option>
+                                <option value="admin">ADMIN</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-0">
+                            <label for="id_emp_id">Emp id:</label> <input type="number" class="form-control"
+                                name="emp_id" id="id_emp_id">
+                        </div>
+                        <div class="col-md-4 mb-0">
+                            <label for="id_photograph">Photograph:</label> <input type="file"
+                                class="form-control photograph" name="photograph" maxlength="120" id="id_photograph">
+                        </div>
+                    </div><br>
+                    <div class="row form-group">
+                        <div class=" col-md-6 mb-0">
+                            <label> Create Login Details </label>&nbsp;&nbsp;<input type="checkbox" id='have_to'>
+                        </div>
+                    </div><br>
+                    <div id='extra_fields' style="display: none;">
+                        <div class="row form-group">
+                            <div class="col-md-4">
+                                <label for="id_user_name">User name:</label> <input type="text" class="form-control"
+                                    name="user_name" maxlength="120" id="id_user_name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_email">Email:</label> <input type="email" class="form-control"
+                                    name="email" maxlength="120" id="id_email" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_department">Department:</label> <select class="form-control"
+                                    name="department" id="id_department" required>
+                                    <option value="">---------</option>
+                                    {% for deps in department %}
+                                    <option value="{{deps.id}}">{{deps}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                       
+                                <div class="col-md-4">
+                                    <label for="id_password">Password:</label> <input type="password"
+                                        class="form-control" name="password" maxlength="120" id="id_password" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_confirm_password">Confirm password:</label> <input type="password"
+                                        name="confirm_password" class="form-control" maxlength="120"
+                                        id="id_confirm_password" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="id_status">Status:</label> <input type="checkbox" name="status"
+                                        maxlength="120" id="id_status" checked>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

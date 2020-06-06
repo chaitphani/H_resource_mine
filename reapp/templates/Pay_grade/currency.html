@@ -1,0 +1,84 @@
+{% extends 'admin_dashboard.html' %}
+{% block content %}
+{% load static %}
+<style>
+    [type=checkbox]:checked,
+    [type=checkbox]:not(:checked) {
+        position: absolute;
+        /* left: -9999px; */
+        /* opacity: 0; */
+    }
+    .col-md-10{
+        margin-left:20% ;
+        margin-top: 10%;
+    }
+</style>
+<div class="col-md-10">
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- {{morf.as_p}} -->
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="id_currency_name">Currency name:</label> <input type="text" class="form-control"
+                        name="currency_name" maxlength="120" id="id_currency_name">
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="id_minimum_salary">Minimum salary:</label> <input type="number" class="form-control"
+                        name="minimum_salary" id="id_minimum_salary">
+                </div>
+                <div class="col-md-4">
+                    <label for="id_maximum_salary">Maximum salary:</label> <input type="number" class="form-control"
+                        name="maximum_salary" id="id_maximum_salary">
+                </div>
+            </div> <br><br>
+            <button class="btn btn-primary btn-sm"><a href="pay_edit" style="color: white">Save</a>
+            </button>&nbsp;
+            <button onclick="window.history.back();" class="btn btn-secondary btn-sm" type="button"
+                style="color: black">Cancel</button>
+        </form>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm">Delete</button><br><br>
+            <table class="table table-hover" style="width: 100%">
+                <tr>
+                    <th style="width: 65px"><input type="checkbox" onchange="checkAll(this)" name="chk[]" /></th>
+                    <th>Currency</th>
+                    <th>Minimum Salary</th>
+                    <th>Maximum Salary</th>
+                </tr>
+                {% for cur in curren %}
+                <tr>
+                    <td><input type="checkbox" value="1"></td>
+                    <td>{{cur.currency_name}}</td>
+                    <td>{{cur.minimum_salary}}</td>
+                    <td>{{cur.maximum_salary}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}
+<script>
+    function checkAll(ele) {
+        var checkboxes = document.getElementsByTagName('input');
+        if (ele.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            }
+        } else {
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+</script>

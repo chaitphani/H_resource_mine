@@ -1,0 +1,565 @@
+{% extends 'staff_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .page-wrapper {
+        /* background: -webkit-linear-gradient(left, #3931af, #00c6ff); */
+    }
+
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+        background: #d6d5d3;
+    }
+
+    .fix-header .page-wrapper {
+        padding-top: 160px;
+    }
+
+    .emp-profile {
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        border-radius: 0.5rem;
+        background: #fff;
+    }
+
+    .profile-img {
+        text-align: center;
+    }
+
+    .profile-img img {
+        width: 86%;
+        height: 100%;
+    }
+
+    .profile-img .file {
+        position: relative;
+        overflow: hidden;
+        margin-top: -20%;
+        width: 86%;
+        border: none;
+        border-radius: 0;
+        font-size: 15px;
+        background: #212529b8;
+    }
+
+    .profile-img .file input {
+        position: absolute;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .profile-head h5 {
+
+        color: #222;
+        font-weight: 700;
+        text-transform: capitalize;
+    }
+
+    .profile-head h6 {
+        color: #0062cc;
+    }
+
+    .profile-edit-btn {
+        border: none;
+        border-radius: 1.5rem;
+        width: 70%;
+        padding: 2%;
+        font-weight: 600;
+        color: #6c757d;
+        cursor: pointer;
+    }
+
+    .proile-rating {
+        font-size: 12px;
+        color: #818182;
+        margin-top: 5%;
+    }
+
+    .proile-rating span {
+        color: #495057;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .profile-head .nav-tabs {
+        margin-bottom: 5%;
+    }
+
+    .profile-head .nav-tabs .nav-link {
+        font-weight: 600;
+        border: none;
+    }
+
+    .profile-head .nav-tabs .nav-link.active {
+        border: none;
+        border-bottom: 2px solid #0062cc;
+    }
+
+    .profile-work {
+        padding: 14%;
+        margin-top: -15%;
+    }
+
+    .profile-work p {
+        font-size: 12px;
+        color: #818182;
+        font-weight: 600;
+        margin-top: 10%;
+    }
+
+    .profile-work a {
+        text-decoration: none;
+        color: #495057;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .profile-work ul {
+        list-style: none;
+    }
+
+    .profile-tab label {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .profile-tab p {
+        font-weight: 600;
+        color: #0062cc;
+        font-size: 14px;
+    }
+
+    .profile-head .nav-tabs .nav-link {
+        font-weight: 600;
+        border: none;
+        font-size: 13px;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.5rem 0.5rem !important;
+    }
+
+    .profile-work ul {
+        list-style: none;
+        text-decoration: none;
+        color: #495057;
+        font-weight: 600;
+        padding: 0px !important;
+        margin: 0px !important;
+        font-size: 14px;
+        line-height: 28px;
+    }
+
+    input.file.btn.btn-lg {
+        margin: 0px;
+    }
+
+    .file.btn.btn-primary button {
+        background: none;
+        border: none;
+        color: #fff;
+    }
+
+    .messages {
+        color: red;
+        background: #d8d7d5;
+        font-style: italic;
+        font-family: sans-serif;
+        text-transform: capitalize;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-img">
+                                {% if object.photograph %}
+                                <img src="{{object.photograph.url}} " alt="" width="346px" height="572px" ; />
+                                {% else %}
+                                <p>No File Associated</p>
+                                {% endif %}
+                                <div class="file btn btn-lg btn-primary">
+                                    <!-- Change Photo -->
+                                    <button type="button" data-toggle="modal" data-target="#myModal">Upload</button>
+                                </div>
+                                <div class="modal fade" id="myModal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Update Profile Picture</h4>
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <input type="file" class="file btn btn-lg" name="file" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="submit" class="btn btn-primary" value="Save" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="profile-head">
+                                <h5>
+                                    {% if object.user_name %}
+                                    {{object.user_name}}
+                                    {% else %}
+                                    Not Provided
+                                    {% endif %}
+                                </h5>
+                                <h6>
+                                    {% if object.job_title %}
+                                    {{object.job_title}}
+                                    {% else %}
+                                    Not Provided
+                                    {% endif %}
+                                </h6>
+                                <a href="{% url 'staff_edit' object.pk %}" class="btn btn-outline-info">Edit
+                                    Profile</a>
+                                <p class="proile-rating">Email : <span> {{object.email}}</span></p>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+                                            role="tab" aria-controls="home" aria-selected="true">Personal
+                                            Information</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
+                                            role="tab" aria-controls="profile" aria-selected="false">Contact
+                                            Information</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="emergency-tab" data-toggle="tab" href="#emergency"
+                                            role="tab" aria-controls="profile" aria-selected="false">Emergency
+                                            Contact</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="job-tab" data-toggle="tab" href="#job" role="tab"
+                                            aria-controls="profile" aria-selected="false">Job details</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-work">
+                                <!-- <div class="card web">
+                        <div class="card-heading">Skills</div>
+                        <div class="card-body">
+                            {% for sk in object.skill.all %}
+                            <ul>{{sk}}</ul>
+                            {% endfor %}</div>
+                      </div> -->
+                                <p>Skills</p>
+                                {% if object.skill %}
+                                {% for sk in object.skill.all %}
+                                <ul>{{sk}}</ul>
+                                {% endfor %}
+                                {% else %}
+                                <p>Not Provided</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                    aria-labelledby="home-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Employee Id</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.emp_id %}
+                                            <p>{{ object.emp_id }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>License number</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.license_number %}
+                                            <p>{{object.license_number}}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Dob</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.dob %}
+                                            <p>{{object.dob}}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Gender</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.gender %}
+                                            <p>{{ object.gender }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Marital Status</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.marital_status %}
+                                            <p>{{ object.marital_status}}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Address Street1</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.address_streer1 %}
+                                            <p>{{ object.address_streer1 }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Address Street2</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.address_streer2 %}
+                                            <p>{{ object.address_streer2 }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>City</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.city %}
+                                            <p>{{ object.city }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>State</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.state %}
+                                            <p>{{ object.state }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Zip Code</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.zip_code %}
+                                            <p>{{ object.zip_code }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Country</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.country %}
+                                            <p>{{ object.country }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Mobile</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.mobile %}
+                                            <p>{{ object.mobile }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.email %}
+                                            <p>{{ object.email }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade show" id="emergency" role="tabpanel"
+                                    aria-labelledby="emergency-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Relation Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.relation_name %}
+                                            <p>{{ object.relation_name }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Relation Type</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.relation_type %}
+                                            <p>{{ object.relation_type }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Relation Mobile</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.relation_mobile %}
+                                            <p>{{ object.relation_mobile }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Relation Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.relation_email %}
+                                            <p>{{ object.relation_email }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show" id="job" role="tabpanel" aria-labelledby="job-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Department</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.department %}
+                                            <p>{{ object.department }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Job Title</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.job_title %}
+                                            <p>{{object.job_title}}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Joined Date </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.joined_date %}
+                                            <p>{{object.joined_date}}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Location</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if object.location %}
+                                            <p>{{ object.location }}</p>
+                                            {% else %}
+                                            <p>Not Provided</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

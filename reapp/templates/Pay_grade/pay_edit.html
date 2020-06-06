@@ -1,0 +1,43 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-10">
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <!-- {{form.as_p}} -->
+            <div class="col-md-6">
+                <label for="id_name">Name:</label> <input type="text" class="form-control" name="name" value="chaitu"
+                    maxlength="120" id="id_name">
+            </div><br>
+            <div class="col-md-6">
+                <label for="id_currency">Currency:</label> <select name="currency" class="form-control" id="id_currency"
+                    multiple>
+                    {% for cur in curren %}
+                    <option value="{{cur.id}}" selected>{{cur}}</option>
+                    {% endfor %}
+                </select>
+            </div><br><br>
+            <button class="btn btn-primary btn-sm">Save</button>
+            <button class="btn btn-info btn-sm">Reset</button>
+        </form>
+        <hr>
+        <a href="{% url 'currency' %}" class="btn btn-success btn-sm"
+            style='color: whitesmoke;width:65px;'>Add</a><br><br>
+        <table class="table table-hover">
+            <tr>
+                <th>Currency</th>
+                <th>Minimum Salary</th>
+                <th>Maximum Salary</th>
+            </tr>
+            {% for cur in curren %}
+            <tr>
+                <td><a href="{% url 'pay_edit' cur.pk %}">{{cur.currency_name}}</a></td>
+                <td>{{cur.minimum_salary}}</td>
+                <td>{{cur.maximum_salary}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

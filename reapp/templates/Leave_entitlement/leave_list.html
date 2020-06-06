@@ -1,0 +1,25 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .content {
+        margin-left: 20%;
+        margin-top: 10%;
+    }
+</style>
+    <table class="table table-hover">
+        <tr>
+            <th>Employee</th>
+            <th>Year</th>
+            <th>Yearly Entitled Days</th>
+        </tr>
+        {% for li in list %}
+        <tr>
+            <td>{{li.employee}}</td>
+            <td>{{li.year}}</td>
+            <td>{{li.entitlement_days}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

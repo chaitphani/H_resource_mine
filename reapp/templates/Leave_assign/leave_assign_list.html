@@ -1,0 +1,30 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .content {
+        margin-left: 20%;
+        margin-top: 10%;
+    }
+</style>
+<div class="content">
+    <table>
+        <tr>
+            <th>Sr.No</th>
+            <th>Employee</th>
+            <th>Leave From</th>
+            <th>Leave To</th>
+            <th>Note</th>
+        </tr>
+        {% for li in list %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{li.employee}}</td>
+            <td>{{li.leave_from}}</td>
+            <td>{{li.leave_to}}</td>
+            <td>{{li.remarks}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

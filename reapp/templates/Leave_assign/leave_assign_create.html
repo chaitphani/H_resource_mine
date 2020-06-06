@@ -1,0 +1,17 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .content{
+        margin-left: 20%;
+        margin-top: 10%;
+    }
+</style>
+<div class="content">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,386 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon"
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYS6tblUDc2uE3925qWHOV5sX1CJTgpouhPqF_yA2orZ1-qcLt">
+    <title>Purple HRM! | Chaitu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'src/scss/custom.scss' %}">
+    <link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="{% static 'vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- NProgress -->
+    <!-- <link href="vendors/nprogress/nprogress.css" rel="stylesheet"> -->
+    <!-- jQuery custom content scroller -->
+    <!-- <link href="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" /> -->
+
+    <!-- Custom Theme Style -->
+    <!-- <link href="build/css/custom.min.css" rel="stylesheet"> -->
+    <link href="{% static 'build/css/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="header-top" style="background: rgba(122, 22, 109, 0.986); height: 6%">
+        <div class="icons">
+            <div id="ex4">
+                <span class="p1 fa-stack fa-2x has-badge" data-count="">
+                    <!-- <i class="p2 fa fa-circle fa-stack-2x"></i> -->
+                    <i class="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
+                </span>
+            </div>
+            <button class="btn btn-primary"><a href="{% url 'logout' %}">Logout</a></button>
+            <div id="message">
+                <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+            </div>
+            <a href="{% url 'logout' %}" class="btn btn-warning btn-sm" style="height: 30px;margin-left: 1200px">Logout</a>
+            <!-- <div class="dropdown">
+<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Favourites
+<span class="caret"></span></button>
+<ul class="dropdown-menu">
+<li><a href="#">HTML</a></li>
+<li><a href="#">CSS</a></li>
+<li><a href="#">JavaScript</a></li>
+</ul>
+</div> -->
+            <div class="text">
+                <!-- <p>(Super Admin) Medeaz Hospital Information System (Yashoda Group (Corporate))</p> -->
+            </div>
+            <div class="searching">
+                <center>
+                    <a href="javascript:void(0)" class="search-open">
+                        <!-- <i class="fa fa-search"></i> -->
+                    </a>
+                </center>
+                <div class="search-inline">
+                    <form>
+                        <input type="text" class="form-control" placeholder="Searching...">
+                        <button type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a href="javascript:void(0)" class="search-close">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <button class="btn btn-primary btn-sm" style="margin-right: 25px;margin-bottom: 20px;width: 6%"><a href="{% url 'login' %}" style="color: white">Login</a></button> -->
+    </div>
+    <div id='mySidenav' class="nav-md">
+        <div class="container body">
+            <!-- <div class="main_container"> -->
+            <div class="col-md-2 left_col menu_fixed"
+                style="background: linear-gradient(rgb(221, 75, 75), rgb(195, 105, 218));">
+                <!-- <div class="left_col scroll-view" style="background: linear-gradient(rgb(235, 102, 102), rgb(4, 135, 139))"> -->
+                <!-- <div class="clearfix"></div> -->
+                <br />
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="input-field">
+                        <input id="myInput" type="text" placeholder="Search.." autocomplete="off">
+                    </div>
+                    <div class="menu_section">
+                        <ul class="nav side-menu" id="myDIV" class="fields">
+                            <li><a></i> Admin</a>
+                                <ul class="nav child_menu" style="display: block !important">
+                                    <li><a><i class="fa fa-home"></i> User Management <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: block !important">
+                                            <li><a href="{% url 'User_list' %}">users</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-edit"></i> Job <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="{% url 'job_list' %}">Job titles</a></li>
+                                            <li><a href="pay_list">Pay Grades</a></li>
+                                            <li><a href="{% url 'employement_status_list' %}">Employment status</a></li>
+                                            <li><a href="{% url 'jobcategory_list' %}">Job Categories</a></li>
+                                            <li><a href="#">Work Shifts</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-desktop"></i> Organization<span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="{% url 'genInfo_add_or_create' %}">General Information</a></li>
+                                            <li><a href="{% url 'location_list' %}">Locations</a></li>
+                                            <li><a href="#">Structure</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-table"></i> Qualifications <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="{% url 'Qualificas_skills_list' %}">Skills</a></li>
+                                            <li><a href="{% url 'education_list' %}">Education</a></li>
+                                            <li><a href="{% url 'license_list' %}">Licenses</a></li>
+                                            <li><a href="{% url 'language_list' %}">Languages</a></li>
+                                            <li><a href="{% url 'membership_list' %}">Memberships</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{% url 'national_add' %}"><i class="fa fa-home"></i> Nationalities </span></a>
+                                    <li><a><i class="fa fa-bar-chart-o"></i> Configuration <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Email Configuration</a></li>
+                                            <li><a href="{% url 'main' %}">Email Subscriptions</a></li>
+                                            <li><a href="#">Localization</a></li>
+                                            <li><a href="#">Modules</a></li>
+                                            <li><a href="#">Social Media Authentication</a></li>
+                                            <li><a href="{% url 'oauth_create' %}">Registerd OAuth Client</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li> <a></i> PIM</a>
+                                <ul class="nav child_menu" style="display: block !important">
+                                    <li class=""><a><i class="fa fa-home"></i> Configuration <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: block !important">
+                                            <li><a href="#">Optional Fields</a></li>
+                                            <li><a href="{% url 'customFieldAdd' %}">Custom Fields</a></li>
+                                            <li><a href="#">Data Import</a></li>
+                                            <li><a href="{% url 'reportingList' %}">Reporting Methods </a></li>
+                                            <li><a href="{% url 'terminateList' %}">Termination Reasons</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-edit"></i> Employee List </a>
+                                    </li>
+                                    <li><a><i class="fa fa-desktop"></i> Add Employee</a>
+                                    </li>
+                                    <li><a><i class="fa fa-table"></i> Reports </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a></i> Leave</a>
+                                <ul class="nav child_menu" style="display: block !important">
+                                    <li><a><i class="fa fa-table"></i> Apply </a>
+                                    </li>
+                                    <li><a><i class="fa fa-table"></i> My Leave </a>
+                                    </li>
+                                    <li><a><i class="fa fa-desktop"></i> Entitlements<span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Add Entitlements</a></li>
+                                            <li><a href="#">Employee Entitlements</a></li>
+                                            <li><a href="#">My Entitlements</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-table"></i> Reports <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Leave Entitlements and Usage Report</a></li>
+                                            <li><a href="#">My Leave Entitlements and Usage Report</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a ><i class="fa fa-home"></i> Configure <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Leave Period</a></li>
+                                            <li><a href="{% url 'leaveTypeList' %}">Leave Types</a></li>
+                                            <li><a href="#">Work Week</a></li>
+                                            <li><a href="{% url 'filter_search' %}">Holidays</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-home"></i> Leave List </a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-home"></i> Assign Leave </a>
+                                    </li>
+                                </ul>
+                            </li>
+                                                        <li><a></i> Time</a>
+                                <ul class="nav child_menu" style="display: block !important">
+                                    <li><a href="#"><i class="fa fa-home"></i> Timesheets <span
+                                                class="fa fa-chevron-down"></span></a></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#"> My Timesheets
+                                                </a></li>
+                                            <li><a href="#">Employee Timesheets </a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-home"></i> Attendance <span
+                                                class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#"> My Records </a></li>
+                                            <li><a href="#"> Punch In/Out </a></li>
+                                            <li><a href="#"> Employee Records </a></li>
+                                            <li><a href="#"> Configuration</a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                    <li><a href="#">Reports<span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="">Project Reports</a></li>
+                                            <li><a href="">Employee Reports</a></li>
+                                            <li><a href="#">Attendance Summary</a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                    <li><a href="#">Project Info <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="#">Customers</a></li>
+                                            <li><a href="#">Projects</a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                            <li><a></i> Recruitment</a>
+                                <ul class="nav child_menu">
+                                    <li><a href="">Candidates</a>
+                                    </li>
+                                    <li><a href="#">Vacancies</a>
+                                    </li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                            <li class=""><a></i> My Info</a>
+                                <ul class="nav child_menu">
+                                    <li></li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                            <li><a></i> Performance</a>
+                                <ul class="nav child_menu">
+                                    <li><a href="#">Configure<span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="">KPIs</a></li>
+                                            <li><a href="">Trackers</a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                    <li><a href="#">Manage Reviews <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="">Manage Reviews</a></li>
+                                            <li><a href="">My Reviews</a></li>
+                                            <li><a href="">Review List</a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                    <li><a href="">My Trackers</a>
+                                    </li>
+                                    <li><a href="">Employee Trackers</a>
+                                    </li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                            <li><a></i> Dashboard</a>
+                                <ul class="nav child_menu">
+                                    <li></li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                            <li class=""> <a></i> Directory</a>
+                                <ul class="nav child_menu">
+                                    <li></li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                            <li><a></i> Maintenance</a>
+                                <ul class="nav child_menu">
+                                    <li><a href="#">Purge Records <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="">Employee Records</a></li>
+                                            <li><a href="">Candidate Records</a></li>
+                                        </ul>
+                                        <!-- third level -->
+                                    </li>
+                                    <li><a href="">Access Records </a>
+                                    </li>
+                                </ul>
+                                <!-- second level -->
+                            </li>
+                        </ul>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+<div class="col-md-10">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-success btn-sm">Save</button>
+        <button class="btn btn-default btn-sm" onclick="window.history.back()">Cancel</button>
+    </form>
+    </div>
+    </div>
+    </div>
+                        <!-- jQuery -->
+                        <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+                        <!-- Bootstrap -->
+                        <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+                        <!-- FastClick -->
+                        <script src="{% static 'vendors/fastclick/lib/fastclick.js' %}"></script>
+                        <!-- NProgress -->
+                        <script src="{% static 'vendors/nprogress/nprogress.js' %}"></script>
+                        <!-- jQuery custom content scroller -->
+                        <script
+                            src="{% static 'vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+
+                        <!-- Custom Theme Scripts -->
+                        <script src="{% static 'build/js/custom.min.js' %}"></script>
+                        <script>
+                            var sp = document.querySelector('.search-open');
+                            var searchbar = document.querySelector('.search-inline');
+                            var shclose = document.querySelector('.search-close');
+
+                            function changeClass() {
+                                searchbar.classList.add('search-visible');
+                            }
+
+                            function closesearch() {
+                                searchbar.classList.remove('search-visible');
+                            }
+                            sp.addEventListener('click', changeClass);
+                            shclose.addEventListener('click', closesearch);
+                        </script>
+
+                        <script>
+                            function myFunction() {
+                                // Declare variables
+                                var input, filter, ul, li, a, i, txtValue;
+                                input = document.getElementById('mySearch');
+                                filter = input.value.toUpperCase();
+                                ul = document.getElementById("myUL");
+                                li = ul.getElementsByTagName('li');
+
+                                // Loop through all list items, and hide those who don't match the search query
+                                for (i = 0; i < li.length; i++) {
+                                    a = li[i].getElementsByTagName("a")[0];
+                                    txtValue = a.textContent || a.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        li[i].style.display = "";
+                                    } else {
+                                        li[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        </script>
+                        <script>
+                            $(document).ready(function () {
+                                $("#myInput").on("keyup", function () {
+                                    var value = $(this).val().toLowerCase();
+                                    $("#myDIV li").filter(function () {
+                                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                    });
+                                    $(document).ready(function () {
+                                    });
+                                });
+                        </script>
+                        <script>
+    $(".admin").click(function () {
+        $(".fields").toggle();
+    });
+});
+                        </script>
+</body>
+</html>

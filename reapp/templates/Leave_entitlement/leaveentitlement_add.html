@@ -1,0 +1,88 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
+
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Leave Entitilement List</h1>
+            <ol class="breadcrumbs">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="#">Leave Entitilement List</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h3 class="card-title">Leave Entitlement Add</h3>
+            <hr>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="quali">
+                        <div class="row form-group">
+                            <div class=" col-md-4">
+                                <!-- {{ form.as_p }} -->
+                                <label for="id_employee">Employee:</label> <select name="employee" id="id_employee"
+                                    class="form-control" required>
+                                    <option value="" selected>---------</option>
+                                    {% for emp in employee %}
+                                    <option value="{{emp.id}}">{{emp}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class=" col-md-4">
+                                <label for="id_year">Year:</label> <select name="year" class="form-control"
+                                    id="id_year">
+                                    <option value="">---------</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                    <option value="2029">2029</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="id_entitlement_days">Entitlement days:</label> <input type="number"
+                                    name="entitlement_days" class="form-control" id="id_entitlement_days">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Submit" class="btn btn-primary ">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

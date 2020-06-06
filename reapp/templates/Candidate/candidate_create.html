@@ -1,0 +1,94 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Candidate List</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'candidate_list' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'candidate_list' %}">Candidate List</a></li>
+            </ol>
+        </div>
+        </div>
+
+    <div class="container">
+        <div class="card">
+           
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- {{form.as_p}} -->
+<div class="quali">
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                    <label for="id_jobvacancy">Jobvacancy:</label>
+                     <select name="jobvacancy" id="id_jobvacancy"
+                        required class="form-control">
+                        <option value="" selected>---------</option>
+                        {% for vacan in vacancy %}
+                        <option value="{{vacan.id}}">{{vacan}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="col-md-4">
+                    <label for="id_candidate_name">Candidate name:</label> <input type="text" name="candidate_name"
+                        maxlength="120" id="id_candidate_name" required class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                    <label for="id_hiring_manager">Hiring manager:</label> <select name="hiring_manager"
+                        id="id_hiring_manager" class="form-control">
+                        <option value="" selected>---------</option>
+                        {% for emp in employee %}
+                        <option value="{{emp.id}}">{{emp}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="col-md-4">
+                    <label for="id_email">Email:</label> <input type="email" class="form-control" name="email" maxlength="70" id="id_email"
+                        required>
+                        </div>
+                       
+                            <div class="col-md-4">
+                    <label for="id_contact_number">Contact number:</label> <input type="number" name="contact_number"
+                        value="0" id="id_contact_number" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                    <label for="id_resume">Resume:</label> <input type="file" name="resume" class="form-control" id="id_resume" required>
+                    </div>
+                    <div class="col-md-4">
+                    <label for="id_key_skills">Key skills:</label> <input type="text" name="key_skills" maxlength="120"
+                        id="id_key_skills" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                    <label for="id_comments">Comments:</label> <input type="text" name="comments" maxlength="120"
+                        id="id_comments" class="form-control">
+                        </div>
+                        </div>
+                        <div class="row form-group">
+                        <div class="col-md-12">
+                    <label for="id_status">Status:</label> <input type="checkbox" name="status" checked
+                        id="id_status">
+                        </div>
+                    </div>
+                </div>
+                    <button class="btn btn-primary">Save</button>
+                    <button class="btn btn-secondary" type="reset">Reset</button>
+                </form><br><br>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

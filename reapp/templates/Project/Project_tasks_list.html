@@ -1,0 +1,126 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .table td,
+    .table th {
+        padding: 6px !important;
+        font-size: 14px;
+    }
+
+    .table {
+        margin: 10px 0px;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: #eee;
+    }
+
+    th {
+        background: #3d6889;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    a:hover,
+    a:focus {
+        text-decoration: none;
+        color: #222;
+    }
+
+    a {
+        color: #222;
+    }
+
+    .btn-info:focus,
+    .btn-info:hover {
+        background-color: #028ee1;
+        border: 1px solid #028ee1;
+    }
+
+    .btn-info,
+    .btn-info.disabled {
+        background: #398bf7;
+        border: 1px solid #398bf7;
+        box-shadow: 0 2px 2px 0 rgba(66, 165, 245, 0.14), 0 3px 1px -2px rgba(66, 165, 245, 0.2), 0 1px 5px 0 rgba(66, 165, 245, 0.12);
+        transition: 0.2s ease-in;
+    }
+
+    .btn-inverse,
+    .btn-inverse:focus,
+    .btn-inverse:active,
+    .btn-inverse.focus,
+    .btn-inverse:hover {
+        background-color: #aa4935;
+        border: 1px solid #aa4935;
+        color: #fff;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Project tasks list</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'Project_tasks_list' %}">Project tasks list</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+
+            <div class="card-body">
+                <a href="{% url 'Project_tasks_create' %}" type='button' title="Add Candidate Here"
+                    class='btn btn-primary'>Add</a>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Task Name</th>
+                        <th>Task_Description</th>
+                        <th>project</th>
+                        <th>Expected Days</th>
+                        <th>Project Module</th>
+                        <th>Project Sub Module</th>
+                        <th>Created date</th>
+                        <th>Modified Date</th>
+                        <th>Images</th>
+                        <th>Status</th>
+                    </tr>
+                    {% if list %}
+                        {% for res1, res3 in list %}
+                            <tr>
+                                <td>{{forloop.counter}}</a></td>
+                                <td>{{res3.task_name|default:''}}</td>
+                                <td>{{res3.task_description|default:''}}</td>
+                                <td>{{res3.project|default:''}}</td>
+                                <td>{{res3.expected_days|default:''}}</td>
+                                <td>{{res3.project_module|default:''}}</td>
+                                <td>{{res3.project_sub_module|default:''}}</td>
+                                <td>{{res3.created_date|date:"d-m-Y" }}</td>
+                                <td>{{res3.modified_date|date:"d-m-Y" }}</td>
+                                {% for res in res1.all %}
+                                    <td><img src="{{ res.url }}" width="100px" height="50px" /></td>
+                                {% endfor %}
+                                {% if res3.status %}
+                                    <td>Active</td>
+                                {% else %}
+                                    <td>In Active</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <td colspan="10" style="text-align: center;">No Data Available to Show</td>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

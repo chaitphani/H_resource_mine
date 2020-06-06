@@ -1,0 +1,198 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.44) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Project task create</h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'Project_tasks_list' %}">Project task create</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- {{form.as_p}} -->
+                    <!-- {% for hidden in task_form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %} -->
+                    <div class="quali">
+                        <div class="row form-group">
+                            <div class=" col-md-4 mb-0">
+                                <label>Code :</label> <input type="text" name="code" maxlength="120"
+                                    class="form-control" id="id_code">
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="id_task_name">Task name</label> <input type="text" name="task_name"
+                                    class="form-control" maxlength="255" id="id_task_name" required>
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="comment">Task description:</label>
+                                <textarea class="form-control" name="task_description" rows="1"
+                                    id="id_task_description"></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_language">Project:</label>
+                                <select class='form-control' name="project" id="id_project">
+                                    <option value="" selected>----</option>
+                                    {% for pro in projects %}
+                                    <option value="{{pro.id}}">{{pro}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_language">Project module:</label>
+                                <select class='form-control' name="project_module" id="id_project_module">
+                                    <option value="" selected>----</option>
+                                    {% for mod in module %}
+                                    <option value="{{mod.id}}">{{mod}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_language">Project sub module</label>
+                                <select class='form-control' name="project_sub_module" id="id_project_sub_module">
+                                    <option value="" selected>----</option>
+                                    {% for sub in submodule %}
+                                    <option value="{{sub.id}}">{{sub}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_priority_level">Priority level</label>
+                                <select name="priority_level" id="id_priority_level" class="form-control">
+                                    <option value="">---------</option>
+                                    <option value="High">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_task_status"> Task status</label>
+                                <select name="task_status" id="id_task_status" class="form-control">
+                                    <option value="">---------</option>
+                                    <option value="Open">Open</option>
+                                    <option value="In-Process">In-Process</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Closed">Closed</option>
+                                    <option value="Re-opened">Re-opened</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_testing_status"> Testing status</label>
+                                <select name="testing_status" id="id_testing_status" class="form-control">
+                                    <option value="">---------</option>
+                                    <option value="Open">Open</option>
+                                    <option value="In-Process">In-Process</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Closed">Closed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_task_category"> Task category</label>
+                                <select name="task_category" id="id_task_category" class="form-control">
+                                    <option value="">---------</option>
+                                    <option value="New">New</option>
+                                    <option value="Issue">Issue</option>
+                                    <option value="Customization">Customization</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_raised_department"> Raised Department </label>
+                                <select class='form-control' name="raised_department" id="id_raised_department">
+                                    <option value="" selected>---</option>
+                                    {% for deps in department %}
+                                    <option value="{{deps.id}}" style="text-transform: capitalize">{{deps}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_raised_by_user"> Raised by user</label>
+                                <select class='form-control' name="raised_by_user" id="id_raised_by_user">
+                                    <option value="" selected>----</option>
+                                    {% for emps in employee %}
+                                    <option value="{{emps.id}}" style="text-transform: capitalize">{{emps}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="id_expected_days">Expected days</label> <input type="number"
+                                    name="expected_days" min="0" id="id_expected_days" class="form-control">
+                            </div>
+                            {{ image_form.management_form }}
+                            {% for form in image_form %}
+                            <div class=" col-md-4 mb-0">
+                            {{ form }}
+                            </div>
+                            {% endfor %}
+                            <!-- <input type="hidden" name="form-TOTAL_FORMS" value="3" id="id_form-TOTAL_FORMS">
+                            <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
+                            <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS">
+                            <input type="hidden" name="form-MAX_NUM_FORMS" value="1000" id="id_form-MAX_NUM_FORMS">
+                            <div class=" col-md-4 mb-0">
+                                <label for="id_form-0-images">Images:</label>
+                                <input type="file" name="form-0-images" accept="image/*" id="id_form-0-images">
+                                <input type="hidden" name="form-0-id" id="id_form-0-id">
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="id_form-1-images">Images:</label>
+                                <input type="file" name="form-1-images" accept="image/*" id="id_form-1-images">
+                                <input type="hidden" name="form-1-id" id="id_form-1-id">
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="id_form-2-images">Images:</label>
+                                <input type="file" name="form-2-images" accept="image/*" id="id_form-2-images">
+                                <input type="hidden" name="form-2-id" id="id_form-2-id">
+                            </div> -->
+                            <div class=" col-md-4 mb-0">
+                                <label for="comment">Remarks</label>
+                                <textarea class="form-control" name="remarks" cols="40" id="id_remarks"
+                                    rows="1"></textarea>
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="comment">Status</label>
+                                <input type="checkbox" name="status" checked id="id_status" class="form-control">
+                            </div>
+                            <div class=" col-md-4 mb-0">
+                                <label for="comment">Is closed</label>
+                                <input type="checkbox" name="is_closed" id="id_is_closed" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- {% for field in task_form %}
+                    {{ field.label }}
+                    {{ field }} <br />
+                    {% endfor %}
+
+                    {{ image_form.management_form }}
+                    {% for form in image_form %}
+                    {{ form }}
+                    {% endfor %} -->
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

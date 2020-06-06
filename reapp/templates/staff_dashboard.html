@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from www.wrappixel.com/demos/admin-templates/admin-pro/main/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Nov 2019 11:31:40 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="{% static 'homestatic/img/lo.png' %}" type="image/x-icon">
+    <title>Employee Dasboard | Med HRMS</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/adminpro/" />
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/plugins/perfect-scrollbar/dist/css/perfect-scrollbar.min.css' %}" rel="stylesheet">
+    <!-- This page CSS -->
+    <!-- chartist CSS -->
+    <link href="{% static 'assets/plugins/chartist-js/dist/chartist.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <!--c3 CSS -->
+    <link href="{% static 'assets/plugins/c3-m
+    aster/c3.min.css' %}" rel="stylesheet">
+    <!--Toaster Popup message CSS -->
+    <link href="{% static 'assets/plugins/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Dashboard 1 Page CSS -->
+    <link href="{% static 'css/pages/dashboard1.css' %}" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="{% static 'css/colors/default-dark.css' %}" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar card-no-border ">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!-- <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Admin Pro</p>
+        </div>
+    </div> -->
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <h4>Medeaz</h4>
+                        <!-- <input id="myInput" type="text" placeholder="Search.." autocomplete="off"> 
+                             -->
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
+                                href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark"
+                                href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <!-- <li class="nav-item hidden-xs-down search-box"> <a
+                                class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
+                                    class="ti-search"></i></a>
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search & enter"> <a
+                                    class="srh-btn"><i class="ti-close"></i></a> </form>
+                        </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                style="text-transform: capitalize;">{{request.session.user_name}}</a>
+                            <div class="dropdown-menu dropdown-menu-right animated bounceInDown">
+                                <a class="dropdown-item" href="#"> About</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}"> logout</a>
+
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <!-- <li class="nav-devider"></li> -->
+                        <li> <a class="waves-effect under_line under_line"
+                                href="{% url 'employee_view' request.session.pk %}" aria-expanded="false"><i
+                                    class="mdi mdi-chart-bubble"></i><span class="hide-menu">Profile</span></a></li>
+                        <li> <a class="waves-effect under_line" href="{% url 'staff_list' %}" aria-expanded="false"><i
+                                    class="mdi mdi-chart-bubble"></i><span class="hide-menu">Department
+                                    Employees</span></a></li>
+                        <li> <a class="waves-effect under_line" aria-expanded="false"><i
+                                    class="mdi mdi-chart-bubble"></i><span class="hide-menu">Attendance</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li> <a class="waves-effect under_line" href="{% url 'attendance_create' %}"
+                                        aria-expanded="false"><i class="fa fa-id-card"></i>&nbsp; I'm In
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li> <a class="has-arrow waves-effect under_line" aria-expanded="false"><i
+                                    class="mdi mdi-account-circle"></i><span class="hide-menu">Leaves</span></a>
+                            <ul aria-expanded="false" class="collapse submenu">
+                                <li><a href="{% url 'leaveform_create' %}"><i class="fa fa-id-card"></i>&nbsp;
+                                        Apply Leave</a></li>
+                                <li><a href="{% url 'leaveform_list' %}"><i class="fa fa-id-card"></i>&nbsp; My
+                                        Leaves</a></li>
+                            </ul>
+                        </li>
+                        <li> <a class="waves-effect under_line" href="{% url 'staff_review_list' %}"
+                                aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span
+                                    class="hide-menu">Performance
+                                </span></a></li>
+                        <li> <a class="has-arrow waves-effect under_line" aria-expanded="false"><i
+                                    class="fa fa-graduation-cap"></i><span class="hide-menu">Calendar</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{% url 'staff_holiday_list' %}"><i class="fa fa-id-card"></i>&nbsp;
+                                        Holidays</a></li>
+                            </ul>
+                        <li> <a  href='{% url "DialyStatusUpdates_Create" %}' class="waves-effect under_line" aria-expanded="false"><i
+                                    class="fa fa-graduation-cap"></i><span class="hide-menu">User Stories</span></a>
+                        </li>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="slimScrollBar"
+            style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 242px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 72.6573px;">
+        </div>
+
+
+        <script data-cfasync="false"
+            src="../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script src="{% static 'assets/plugins/jquery/jquery.min.js' %}"></script>
+        <!-- Bootstrap popper Core JavaScript -->
+        <script src="{% static 'assets/plugins/bootstrap/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+        <!-- slimscrollbar scrollbar JavaScript -->
+        <script src="{% static 'js/perfect-scrollbar.jquery.min.js' %}"></script>
+        <!--Wave Effects -->
+        <script src="{% static 'js/waves.js' %}"></script>
+        <!--Menu sidebar -->
+        <script src="{% static 'js/sidebarmenu.js' %}"></script>
+        <!--Custom JavaScript -->
+        <script src="{% static 'js/custom.min.js' %}"></script>
+        <!-- ============================================================== -->
+        <!-- This page plugins -->
+        <!-- ============================================================== -->
+        <!--sparkline JavaScript -->
+        <script src="{% static 'assets/plugins/sparkline/jquery.sparkline.min.js' %}"></script>
+        <!--morris JavaScript -->
+        <script src="{% static 'assets/plugins/chartist-js/dist/chartist.min.js' %}"></script>
+        <script
+            src="{% static 'assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js' %}"></script>
+        <!--c3 JavaScript -->
+        <script src="{% static 'assets/plugins/d3/d3.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/c3-master/c3.min.js' %}"></script>
+        <!-- Popup message jquery -->
+        <script src="{% static 'assets/plugins/toast-master/js/jquery.toast.js' %}"></script>
+        <!-- Chart JS -->
+        <script src="{% static 'js/dashboard1.js' %}"></script>
+        <!-- ============================================================== -->
+        <!-- Style switcher -->
+        <!-- ============================================================== -->
+        <script src="{% static 'assets/plugins/styleswitcher/jQuery.style.switcher.js' %}"></script>
+
+
+        <script>
+            function expandCollapse() {
+
+                if ($("#submenu").css('display') == 'none') {
+
+                    $("#expand-collapse").html("Collapse All");
+
+                    $("#submenu").show("slow");
+
+                } else {
+
+                    $("#expand-collapse").html("Expand All");
+
+                    $("#submenu").hide("slow");
+
+                }
+
+            }
+
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#myInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#myDIV li").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                if (localStorage['unzoom'] == "yes") {
+                    $("#page-fullscreen").click();
+                }
+                $("#page-fullscreen").click(function () {
+                    var zoom_not = localStorage['unzoom'];
+                    if (!zoom_not) {
+                        console.log("if");
+                        localStorage['unzoom'] = "yes";
+                    } else {
+                        console.log("else");
+                        localStorage['unzoom'] = "no";
+                        localStorage.clear()
+                    }
+                });
+            });
+        </script>
+</body>
+
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+<!-- Mirrored from www.wrappixel.com/demos/admin-templates/admin-pro/main/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 Nov 2019 11:31:47 GMT -->
+
+</html>

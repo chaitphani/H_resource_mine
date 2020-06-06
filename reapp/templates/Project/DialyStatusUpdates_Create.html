@@ -1,0 +1,126 @@
+{% extends 'staff_dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.36) !important;
+        padding: 5px;
+        border-radius: 5px !important;
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+        padding: 9px;
+    }
+</style>
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-md-12 page-title-div">
+            <h1 class="header">Dialy Status Updates </h1>
+            <ol class="breadcrumbs ">
+                <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                <li class="active"><a href="{% url 'DialyStatusUpdates_Create' %}">Dialy Status Updates</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value="submit">
+                    <!-- <div class="quali">
+                        <div class="row form-group">
+
+                            <div class="col-md-3">
+                                <label for="id_language">Task Id:</label>
+                                <select class='form-control' name="project" id="id_project">
+
+                                    <option value="" selected></option>
+                                    {% for emp in project %}
+                                    <option value="emp.id">{{emp.task_id}}</option>
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+                            <div class=" col-md-3 mb-0">
+                                <label for="id_updates">Updates:</label> <textarea name="updates" rows="10"
+                                    id="id_updates" cols="40">
+                            </textarea>
+                            </div>
+                            <div class=" col-md-3 mb-0">
+                                <label for="id_user_status">User status:</label> <select name="user_status"
+                                    id="id_user_status">
+                                    <option value="">---------</option>
+
+                                    <option value="Open">Open</option>
+
+                                    <option value="In-Process">In-Process</option>
+
+                                    <option value="Pending">Pending</option>
+
+                                    <option value="Closed">Closed</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="id_testing_status">Testing status:</label> <select name="testing_status"
+                                    id="id_testing_status">
+                                    <option value="">---------</option>
+
+                                    <option value="Open">Open</option>
+
+                                    <option value="In-Process">In-Process</option>
+
+                                    <option value="Pending">Pending</option>
+
+                                    <option value="Closed">Closed</option>
+
+                                </select>
+
+                            </div>
+                            <div class=" col-md-3 mb-0">
+                                <label for="id_priority">Priority:</label> <input type="text" name="priority"
+                                    id="id_priority" maxlength="120">
+                            </div>
+                            <div class=" col-md-3 mb-0">
+                                <label for="id_task_status">Task status:</label> <input type="text" name="task_status"
+                                    id="id_task_status" maxlength="120">
+                            </div>
+                        </div>
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div> -->
+                </form>
+                <hr>
+                <table class="table table-hover">
+                <h1>Dialy Status Updates list :</h1>
+
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Task Id</th>
+                        <th>Updates</th>
+                        <th>User Status</th>
+                        <th>Testing Status</th>
+                        <th>Image-1</th>
+                        <th>Image-2</th>
+                    </tr>
+                    {% for daily in daily_status %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{daily.task_id}}</td>
+                        <td>{{daily.updates}}</td>
+                        <td>{{daily.user_status}}</td>
+                        <td>{{daily.testing_status}}</td>
+                        <td>{{daily.image1}}</td>
+                        <td>{{daily.image2}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

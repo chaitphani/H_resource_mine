@@ -1,0 +1,14 @@
+{% extends 'admin_dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-10">
+    <h1>General Information</h1>
+    <ul>
+    {% for gen in geninfo %}
+        <li>gen</li>
+    {% empty %}
+        <li>Nothing to display</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
